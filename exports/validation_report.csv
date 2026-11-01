@@ -1,8 +1,8 @@
 category,record_id,description
 WRONG_PAYMENT_ALLOCATION,PMT-2026-000001,Payment loan does not match installment loan.
-INSTALLMENT_RECONCILIATION,INS-LOAN-2026-000001-001,Recorded paid amount 14777.49 differs from payments 0.
-INSTALLMENT_RECONCILIATION,INS-LOAN-2026-000002-001,Recorded paid amount 0.0 differs from payments 14777.49.
-LOAN_BALANCE_MISMATCH,LOAN-2026-000001,Outstanding balance 0.0 differs from expected 108999.51999999999.
+INSTALLMENT_RECONCILIATION,INS-LOAN-2026-000001-001,Recorded paid amount 59109.97 differs from payments 0.
+INSTALLMENT_RECONCILIATION,INS-LOAN-2026-000002-001,Recorded paid amount 0.0 differs from payments 59109.97.
+LOAN_BALANCE_MISMATCH,LOAN-2026-000001,Outstanding balance 0.0 differs from expected 118219.93.
 PAID_ACCOUNT_IN_COLLECTIONS,COL-2026-000001,Zero-balance loan has an open collection case.
 CONTACT_OUTSIDE_ALLOWED_WINDOW,CAT-2026-000001,Contact attempt occurred outside allowed contact hours.
 PROMISE_EXCEEDS_ARREARS,PTP-2026-000001,Promised amount exceeds current case arrears.
