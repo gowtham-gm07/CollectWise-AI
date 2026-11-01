@@ -1,0 +1,37 @@
+[
+    {
+        "anomaly_id": "ANOM-001",
+        "entity_name": "collection_cases",
+        "record_id": "COL-2026-000001",
+        "anomaly_type": "PAID_ACCOUNT_IN_COLLECTIONS",
+        "description": "Loan balance is zero but collection case remains open."
+    },
+    {
+        "anomaly_id": "ANOM-002",
+        "entity_name": "contact_attempts",
+        "record_id": "CAT-2026-000001",
+        "anomaly_type": "CONTACT_OUTSIDE_ALLOWED_WINDOW",
+        "description": "Contact attempt was moved to 02:00."
+    },
+    {
+        "anomaly_id": "ANOM-003",
+        "entity_name": "payments",
+        "record_id": "PMT-2026-000001",
+        "anomaly_type": "WRONG_INSTALLMENT_ALLOCATION",
+        "description": "Payment references an installment belonging to another loan."
+    },
+    {
+        "anomaly_id": "ANOM-004",
+        "entity_name": "promises_to_pay",
+        "record_id": "PTP-2026-000001",
+        "anomaly_type": "PROMISE_EXCEEDS_ARREARS",
+        "description": "Promised amount exceeds the collection case arrears."
+    },
+    {
+        "anomaly_id": "ANOM-005",
+        "entity_name": "collection_cases",
+        "record_id": "COL-2026-000001",
+        "anomaly_type": "DISPUTED_DEBT_TREATED_AS_CONFIRMED",
+        "description": "Disputed debt is incorrectly represented as confirmed."
+    }
+]

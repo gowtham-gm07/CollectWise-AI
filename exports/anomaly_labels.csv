@@ -1,0 +1,6 @@
+anomaly_id,entity_name,record_id,anomaly_type,description
+ANOM-001,collection_cases,COL-2026-000001,PAID_ACCOUNT_IN_COLLECTIONS,Loan balance is zero but collection case remains open.
+ANOM-002,contact_attempts,CAT-2026-000001,CONTACT_OUTSIDE_ALLOWED_WINDOW,Contact attempt was moved to 02:00.
+ANOM-003,payments,PMT-2026-000001,WRONG_INSTALLMENT_ALLOCATION,Payment references an installment belonging to another loan.
+ANOM-004,promises_to_pay,PTP-2026-000001,PROMISE_EXCEEDS_ARREARS,Promised amount exceeds the collection case arrears.
+ANOM-005,collection_cases,COL-2026-000001,DISPUTED_DEBT_TREATED_AS_CONFIRMED,Disputed debt is incorrectly represented as confirmed.
