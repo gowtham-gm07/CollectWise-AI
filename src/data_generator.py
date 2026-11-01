@@ -3,7 +3,6 @@ import random
 import sqlite3
 import calendar
 from datetime import date
-from pathlib import Path
 
 from faker import Faker
 
@@ -38,7 +37,6 @@ def generate_base_data(n_loans=500):
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute("PRAGMA foreign_keys = ON")
 
-        # Clear existing records in dependency order
         tables = [
             "case_events",
             "contact_attempts",
@@ -61,28 +59,18 @@ def generate_base_data(n_loans=500):
             account_id = f"ACC-2026-{i:06d}"
             loan_id = f"LOAN-2026-{i:06d}"
 
-            customer_name = fake.name()
-            email = fake.email()
-            phone = fake.phone_number()
-
-            risk_segment = random.choice(
-                ["LOW", "MEDIUM", "HIGH"]
-            )
-
-            hardship_flag = random.choice([0, 0, 0, 1])
-
             conn.execute("""
                 INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?)
             """, (
                 customer_id,
-                customer_name,
-                email,
-                phone,
-                risk_segment,
-                hardship_flag
+                fake.name(),
+                fake.email(),
+                fake.phone_number(),
+                random.choice(["LOW", "MEDIUM", "HIGH"]),
+                random.choice([0, 0, 0, 1])
             ))
 
-            opened_date = add_months(REFERENCE_DATE, -12)
+            issue_date = add_months(REFERENCE_DATE, -12)
 
             conn.execute("""
                 INSERT INTO accounts VALUES (?, ?, ?, ?, ?)
@@ -90,22 +78,12 @@ def generate_base_data(n_loans=500):
                 account_id,
                 customer_id,
                 random.choice(["SAVINGS", "CURRENT", "LOAN"]),
-                opened_date.isoformat(),
+                issue_date.isoformat(),
                 "ACTIVE"
             ))
 
-            principal = round(
-                random.uniform(50000, 500000), 2
-            )
-
-            interest_rate = round(
-                random.uniform(8, 18), 2
-            )
-
-            issue_date = add_months(
-                REFERENCE_DATE,
-                -12
-            )
+            principal = round(random.uniform(50000, 500000), 2)
+            interest_rate = round(random.uniform(8, 18), 2)
 
             conn.execute("""
                 INSERT INTO loans VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -119,16 +97,24 @@ def generate_base_data(n_loans=500):
                 issue_date.isoformat()
             ))
 
-            monthly_amount = round(principal / 12, 2)
+            # Three installments distributed across 12 months.
+            # Final installment absorbs rounding differences.
+            regular_amount = round(principal / 3, 2)
 
-            for installment_number in range(1, 13):
+            for installment_number in range(1, 4):
                 installment_id = (
                     f"INS-{loan_id}-{installment_number:03d}"
                 )
 
                 due_date = add_months(
                     issue_date,
-                    installment_number
+                    installment_number * 4
+                )
+
+                amount_due = (
+                    round(principal - regular_amount * 2, 2)
+                    if installment_number == 3
+                    else regular_amount
                 )
 
                 status = (
@@ -144,7 +130,7 @@ def generate_base_data(n_loans=500):
                     installment_id,
                     loan_id,
                     due_date.isoformat(),
-                    monthly_amount,
+                    amount_due,
                     0,
                     status
                 ))
@@ -163,7 +149,8 @@ def generate_base_data(n_loans=500):
         conn.commit()
 
     print(f"Successfully generated {n_loans} loans.")
-    print(f"Installments generated: {n_loans * 12}")
+    print(f"Installments generated: {n_loans * 3}")
+    print("Installment schedule: 3 installments across 12 months.")
     print(f"Database: {DB_PATH}")
 
 
